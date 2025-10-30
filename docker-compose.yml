@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  scopes-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scopes-streamlit
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./artifacts:/app/artifacts
+    environment:
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_HEADLESS=true
+      - STREAMLIT_SERVER_RUNONSAVE=false
+    restart: unless-stopped
+    command: streamlit run src/ui_streamlit.py --logger.level=info
